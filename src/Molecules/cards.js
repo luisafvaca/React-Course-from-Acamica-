@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const CardsSection = styled.section`
     display: flex;
-    justify-content: center;
+    flex-flow: wrap;
 `
 class Cards extends React.Component {
     cards = (items) => {
