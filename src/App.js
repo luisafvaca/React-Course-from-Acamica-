@@ -1,34 +1,43 @@
 import React from 'react';
-import styled from 'styled-components';
 import Proptypes from 'prop-types';
+import PrimaryButton from './Atoms/button';
+import Cards from './Molecules/cards';
 
-const AppStyles = styled.button`
-  color: ${props => props.color ? props.color : 'red'};
-  border-color: tomato;
-  border-radius: 3px;
-`;
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-`;
+class App extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      movies: {},
+      apiKey: process.env.REACT_APP_API_URL_TMDB_KEY
+    }
+    this.handleClickfn = this.handleClickfn.bind(this)
+  }
 
-function App() {
-  return (
-    <div className='App'>
-       <Container >
-        <AppStyles color='tomato'>
-          <h1>Hola Mundo</h1>
-        </AppStyles>
-      </Container>
-    </div>
-  );
+  request = async () => {
+    const url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${this.state.apiKey}&language=en-US&page=1`;
+    console.log(url, 'url')
+    const response = await fetch(url);
+    const parse = await response.json();
+    this.setState({movies: parse})
+  }
+
+  handleClickfn = (e) =>{
+    this.request()
+  }
+
+  render() {
+    console.log(this.state.movies)
+    return (
+      <div className='App'>
+         <PrimaryButton onclickEvent={this.handleClickfn}/>
+         <Cards 
+          movies={this.state.movies.results}
+         />
+      </div>
+    );
+  }
 }
 
-AppStyles.Proptypes = {
-  color: Proptypes.string
-}
 
 export default App;
