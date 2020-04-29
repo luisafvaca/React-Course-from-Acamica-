@@ -30,7 +30,7 @@ class App extends React.Component{
     console.log(this.state.movies)
     return (
       <div className='App'>
-         <PrimaryButton onclickEvent={this.handleClickfn}/>
+         <PrimaryButton onclickEvent={this.handleClickfn} text={'Get the trending movies'}/>
          <Cards 
           movies={this.state.movies.results}
          />
